@@ -474,7 +474,7 @@ const unsynced = () => D.recs.filter(r=>r.sync==='pending' || r.sync==='local');
 const pending = () => D.recs.filter(r=>r.sync==='pending');
 const normB = s => String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
 const baseB = s => normB(String(s||'').replace(/\(.*?\)/g,'').replace(/\bLOT\b.*$/i,''));
-const millOK = s => /^[A-Z0-9][A-Z0-9\-\/]{1,19}$/.test(s||'');
+const millOK = s => /^[A-Z0-9][A-Z0-9_\-\/]{1,19}$/.test(s||'');
 
 /* Sheet date text → ISO. Handles 22/01/2027, 1/7/2027, Dec-2026, June 2027, and real dates. Month-only values use the month's last day for expiry, first day for production. */
 function sheetDate(v, end){
@@ -717,8 +717,8 @@ function vHome(){
  const mill = (!ready) ? `<section class="card card-pad" aria-labelledby="mcH">
     <h2 id="mcH" style="font-size:19px;font-weight:700">Mill Code</h2>
     <p class="hint" style="margin-top:4px">Enter the mill code before scanning. It is saved with every record.</p>
-    <div class="qty" style="margin-top:14px"><input id="millcode" class="mono" autocapitalize="characters" autocomplete="off" placeholder="e.g. MH-PN-012" value="${esc(D.millCode)}" style="font-size:24px;text-transform:uppercase" aria-label="Mill code"></div>
-    <div class="hint" id="millhint" style="margin-top:8px">Letters, numbers, - and / only.</div>
+    <div class="qty" style="margin-top:14px"><input id="millcode" class="mono" autocapitalize="characters" autocomplete="off" placeholder="e.g. MH_PN-012" value="${esc(D.millCode)}" style="font-size:24px;text-transform:uppercase" aria-label="Mill code"></div>
+    <div class="hint" id="millhint" style="margin-top:8px">Letters, numbers, -, _ and / only.</div>
     <button class="btn btn-primary btn-block" data-a="millsave" style="margin-top:14px">${I('check')}Save Mill Code</button>
    </section>`
   : `<section class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px"><span class="ic" style="width:40px;height:40px;border-radius:10px;background:var(--coral-soft);color:var(--coral-strong);display:grid;place-items:center">${I('pin')}</span>
@@ -1264,7 +1264,7 @@ setInterval(autoRefresh, 60e3);
 /* ================= EVENTS ================= */
 function saveMill(){
  const el=document.getElementById('millcode'); const v=(el?el.value:'').trim().toUpperCase().replace(/\s+/g,'');
- if(!millOK(v)){ const h=document.getElementById('millhint'); if(h){ h.textContent='Enter a valid mill code: 2 to 20 letters or numbers ( - and / allowed ).'; h.style.color='var(--err-fg)' } if(el) el.focus(); return }
+ if(!millOK(v)){ const h=document.getElementById('millhint'); if(h){ h.textContent='Enter a valid mill code: 2 to 20 letters or numbers ( -, _ and / allowed ).'; h.style.color='var(--err-fg)' } if(el) el.focus(); return }
  D.millCode=v; S.millEdit=false; save(); render(); toast('Mill code saved: '+v, true);
 }
 document.addEventListener('click', e=>{
