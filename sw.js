@@ -1,5 +1,5 @@
 // Offline cache for the Premix Batch Scanner. Bump VERSION after each change to index.html.
-const VERSION = 'pmx-v3';
+const VERSION = 'pmx-v4';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
   'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js',
   'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'];
